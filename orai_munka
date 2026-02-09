@@ -1,0 +1,42 @@
+#include "graphics.hpp"
+
+using namespace genv;
+using namespace std;
+
+const int XX = 800;
+const int YY = 600;
+
+
+int main()
+{
+    gout.open(XX,YY);
+    gout << font("LiberationSans-Regular.ttf",20);
+    gout << color(36, 237, 198);
+    gout << move_to(100,80);
+    gout << box_to(720, 480);
+    gout << move_to(400,200);
+    gout << color(21,39,214);
+    gout << line(100,200);
+    gout << line(-200,0);
+    gout << line(100,-200);
+    gout << refresh;
+    event ev;
+    bool egergomb = false;
+    while(gin >> ev){
+        if (ev.button == btn_left){
+            gout << move_to(ev.pos_x,ev.pos_y);
+            egergomb = true;
+        }
+        if (ev.button == -btn_left){
+            egergomb = false;
+        }
+        if (egergomb){
+            gout << move_to(ev.pos_x,ev.pos_y);
+        }
+        gout << refresh;
+        if (ev.keycode == 's'){
+            gout.save("mualkotas.bmp");
+        }
+    }
+    return 0;
+}
